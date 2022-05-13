@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '_53v6ylo8$+&ub*0%(1at3)@&ofd(sloi-i!y1sc%gj(ht0oaj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'blog',
     'contacto',
     'tienda',
+    'carro',
+    
 
 ]
 
@@ -53,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'ProyectoWeb.urls'
@@ -68,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'carro.context_processor.importe_total_carro',                
             ],
         },
     },
@@ -124,10 +128,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
+"""STATIC_URL = '/static/'
 
 MEDIA_URL='/media/'
-MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT=os.path.join(BASE_DIR, 'media')"""
 
 # configuración de email
 
@@ -137,3 +141,13 @@ EMAIL_USE_TLS=True
 EMAIL_PORT=587
 EMAIL_HOST_USER="juanmds@gmail.com"
 EMAIL_HOST_PASSWORD="diomuzdnunmphzsx"
+
+STATIC_ROOT =os.path.join(BASE_DIR,'staticfiles')
+STATIC_TMP =os.path.join(BASE_DIR,'static')
+STATIC_URL='/static/'
+os.makedirs(STATIC_TMP,exist_ok=True)
+os.makedirs(STATIC_ROOT,exist_ok=True)
+STATICFILES_DIRS=(
+    os.path.join(BASE_DIR,'STATIC'),
+)
+STATICFILES_STORAGE='whitenoise.storage.CompressedManifestStaticFilesStorage'
